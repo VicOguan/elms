@@ -1,0 +1,47 @@
+body{
+
+    display:flex;
+
+    margin:0;
+
+    font-family: Arial, serif;
+}
+
+.sidebar{
+
+    width:220px;
+
+    background:#1e3a8a;
+
+    color:white;
+
+    height:100vh;
+
+    padding:20px;
+}
+
+.sidebar button{
+
+    width:100%;
+
+    margin:8px 0;
+
+    padding:10px;
+
+    background:#2563eb;
+
+    border:none;
+
+    color:white;
+
+    border-radius:8px;
+}
+
+.content{
+
+    flex:1;
+
+    padding:30px;
+
+    background:#f4f7fb;
+}

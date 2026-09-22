@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="css/dashboard.css">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>ELMS</h2>
+
+    <button onclick="showMyLeave()">
+        My Leaves
+    </button>
+
+    <button onclick="showLeaveForm()">
+        Submit Leave
+    </button>
+
+    <button id="adminMenu" style="display:none;" onclick="showAllLeave()">
+        All Leaves
+    </button>
+
+    <button onclick="logout()">
+        Logout
+    </button>
+
+</div>
+
+<div class="content">
+
+    <h1>Welcome</h1>
+
+    <div id="pageContent">
+
+        Select a menu.
+
+    </div>
+
+</div>
+
+<script src="js/dashboard.js"></script>
+
+</body>
+
+</html>
