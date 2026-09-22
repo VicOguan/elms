@@ -25,7 +25,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/{id}")
-    public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable int id){
+    public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable long id){
         EmployeeResponse response = employeeService.getEmployeeId(id);
 
         if (response == null){
@@ -50,7 +50,7 @@ public class EmployeeController {
 
     @PutMapping("/employee/{id}")
     public ResponseEntity<ApiResponse<EmployeeResponse>> updateEmployee(
-            @PathVariable int id, @Valid @RequestBody EmployeeRequest request){
+            @PathVariable long id, @Valid @RequestBody EmployeeRequest request){
         EmployeeResponse response = employeeService.updateEmployee(id, request);
 
         if (response == null){
@@ -63,7 +63,7 @@ public class EmployeeController {
 
     @DeleteMapping("/employee/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteEmployee(
-            @PathVariable int id){
+            @PathVariable long id){
         employeeService.deleteEmployee(id);
 
         ApiResponse<Void> response = new ApiResponse<>("Deleted Successfully!", null);

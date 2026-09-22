@@ -24,9 +24,9 @@ public class LeaveRequestController {
 
     @PostMapping("/leave")
     public ResponseEntity<ApiResponse<LeaveResponseDTO>> addLeave(
-            @Valid @RequestBody LeaveRequestDTO request){
+            @Valid @RequestBody LeaveRequestDTO request,Authentication authentication){
 
-        LeaveResponseDTO responseDTO = leaveService.addLeave(request);
+        LeaveResponseDTO responseDTO = leaveService.addLeave(request, authentication.getName());
 
         ApiResponse<LeaveResponseDTO> apiResponse = new ApiResponse<>(
                 "Added Successfully",
@@ -39,6 +39,7 @@ public class LeaveRequestController {
     @GetMapping("/leave")
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<List<LeaveResponseDTO>> getAllLeaves(){
+
         List<LeaveResponseDTO> responseDTO = leaveService.getAllLeave();
 
         return ResponseEntity.ok(responseDTO);
@@ -47,6 +48,8 @@ public class LeaveRequestController {
     @GetMapping("/leave/my")
     public ResponseEntity<List<LeaveResponseDTO>> getMyLeave(
             Authentication authentication){
+        System.out.println(authentication);
+        System.out.println(authentication.getAuthorities());
 
     return ResponseEntity.ok(leaveService.getMyLeave(authentication.getName()));
     }
@@ -65,7 +68,7 @@ public class LeaveRequestController {
 
     @DeleteMapping("/leave/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteLeave(@PathVariable long id){
-        leaveService.DeleteLeave(id);
+        leaveService.deleteLeave(id);
 
         ApiResponse<Void> response = new ApiResponse<>(
                 "Deleted Successfully!",

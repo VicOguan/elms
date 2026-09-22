@@ -18,7 +18,7 @@ public class EmployeeMapper {
         employee.setDepartment(request.getDepartment());
         employee.setPosition(request.getPosition());
         employee.setHiredDate(request.getHiredDate());
-        employee.setStatus(request.getStatus());
+        employee.setEmployeeStatus(request.getEmployeeStatus());
 
         return employee;
     }
@@ -34,7 +34,7 @@ public class EmployeeMapper {
                 employee.getDepartment(),
                 employee.getPosition(),
                 employee.getHiredDate(),
-                employee.getStatus()
+                employee.getEmployeeStatus()
         );
     }
 }

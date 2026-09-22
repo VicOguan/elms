@@ -1,52 +1,60 @@
 <!DOCTYPE html>
-<html lang="">
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELMS Dashboard</title>
 
-    <title>Dashboard</title>
-
-    <link rel="stylesheet" href="css/dashboard.css">
-
+    <link rel="stylesheet" href="elms-frontend/css/dashboard.css">
 </head>
 
 <body>
 
 <div class="sidebar">
 
-    <h2>ELMS</h2>
+    <div class="logo" onclick="goHome()">ELMS</div>
 
-    <button onclick="showMyLeave()">
-        My Leaves
+    <!-- Employee -->
+    <button id="myLeavesBtn" onclick="showMyLeaves()">My Leaves</button>
+    <button id="submitLeaveBtn" onclick="showLeaveForm()">Submit Leave</button>
+
+    <!-- Manager/Admin -->
+    <button id="dashboardBtn" onclick="showDashboard()" style="display:none;">Dashboard</button>
+    <button id="employeeBtn" onclick="loadEmployees()" style="display:none;">Employees</button>
+    <button id="leaveRequestBtn" onclick="loadLeaves()" style="display:none;">Leave Requests</button>
+
+    <!-- Admin only -->
+    <button id="addEmployeeBtn" onclick="showEmployeeForm()" style="display:none;">
+        Add Employee
     </button>
 
-    <button onclick="showLeaveForm()">
-        Submit Leave
-    </button>
-
-    <button id="adminMenu" style="display:none;" onclick="showAllLeave()">
-        All Leaves
-    </button>
-
-    <button onclick="logout()">
-        Logout
-    </button>
+    <button onclick="logout()">Logout</button>
 
 </div>
 
-<div class="content">
+<div class="main">
 
-    <h1>Welcome</h1>
+    <header class="top-bar">
+        <div>
+            <h1 id="welcomeText">Welcome</h1>
+        </div>
+        <div class="user-profile-badge">
+            <div class="person-icon-wrapper small">
+                <svg class="person-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            <span id="userRoleBadge" class="user-role-badge">USER</span>
+        </div>
+    </header>
 
-    <div id="pageContent">
-
-        Select a menu.
-
-    </div>
+    <div id="contentArea"></div>
 
 </div>
 
-<script src="js/dashboard.js"></script>
+<script src="elms-frontend/js/dashboard.js"></script>
+<script src="elms-frontend/js/leave.js"></script>
 
 </body>
-
 </html>

@@ -39,12 +39,16 @@ public class AuthService {
     }
 
     public void registerManager(RegisterRequest request){
-        AppUser appUser = new AppUser();
 
+        Employee employee = employeeRepository
+                .findByEmployeeNumber(request.getEmployeeNumber())
+                .orElseThrow(()-> new EmployeeNotFoundException("Employee not found!"));
+
+        AppUser appUser = new AppUser();
         appUser.setUserName(request.getUsername());
         appUser.setPassword(passwordEncoder.encode(request.getPassword()));
-
         appUser.setRole("MANAGER");
+        appUser.setEmployee(employee);
 
         userRepository.save(appUser);
     }

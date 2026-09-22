@@ -1,29 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>ELMS Login</title>
-    <link rel="stylesheet" href="css/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELMS | Login</title>
+
+    <link rel="stylesheet" href="elms-frontend/css/login.css">
 </head>
 <body>
 
-<div class="login-card">
+<!-- Navigation -->
+<nav class="navbar">
+    <a href="index.html" class="logo">
+        ELMS
+    </a>
 
-    <h1>ELMS</h1>
-    <p>Employee Leave Management System</p>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="login.html" class="active">Login</a>
+    </div>
+</nav>
 
-    <input id="username" type="text" placeholder="Username">
+<!-- Login Section -->
+<section class="login-container">
 
-    <input id="password" type="password" placeholder="Password">
+    <div class="login-left">
 
-    <button onclick="login()">
-        Login
-    </button>
+        <div class="login-card">
 
-    <p id="message"></p>
+            <h1>Welcome Back</h1>
 
-</div>
+            <p>Sign in to Employee Leave Management System</p>
 
-<script src="js/auth.js"></script>
+            <input
+                    id="username"
+                    type="text"
+                    placeholder="Username">
+
+            <input
+                    id="password"
+                    type="password"
+                    placeholder="Password">
+
+            <button type="button" onclick="login()">
+                Login
+            </button>
+
+            <p id="message"></p>
+
+        </div>
+
+    </div>
+
+    <div class="login-right">
+
+        <AsyncImage query="employee leave management system illustration blue office workers" aspectRatio="1:1" maxWidth=420/>
+
+            <h2>Manage Employee Leaves Efficiently</h2>
+
+            <p>
+                Secure authentication, leave tracking, approvals,
+                and role-based access—all in one system.
+            </p>
+
+    </div>
+
+</section>
+
+<script src="elms-frontend/js/auth.js"></script>
 
 </body>
 </html>

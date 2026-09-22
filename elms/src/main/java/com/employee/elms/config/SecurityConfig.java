@@ -1,24 +1,40 @@
 package com.employee.elms.config;
 
+import com.employee.elms.security.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, JwtAuthFilter jwtAuthFilter)throws Exception{
 
         httpSecurity.csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/",
+                                "/elms-frontend",
+                                "/index.html",
+                                "/login.html",
+                                "/dashboard.html",
+                                "/elms-frontend/css/**",
+                                "/elms-frontend/js/**",
+                                "/elms-frontend/assets/**",
+                                "/favicon.ico"
+                        ).permitAll()
+
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/auth/register",
@@ -44,18 +60,18 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.PUT,
                                 "/leave/{id}/status"
-                        ).hasRole("MANAGER")
+                        ).hasAnyRole("MANAGER", "ADMIN")
 
                         .requestMatchers(
                                 HttpMethod.DELETE,
                                 "/leave/{id}"
-                        ).hasRole("MANAGER")
+                        ).hasAnyRole("MANAGER", "ADMIN")
 
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/employee",
                                 "/employee/**"
-                        ).permitAll()
+                        ).hasAnyRole("ADMIN", "MANAGER")
 
                         .requestMatchers(
                                 HttpMethod.POST,
@@ -73,7 +89,8 @@ public class SecurityConfig {
                         ).hasRole("ADMIN")
                         .anyRequest()
                         .authenticated())
-                .httpBasic(Customizer.withDefaults());
+                .httpBasic(http -> http.disable())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

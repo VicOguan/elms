@@ -4,9 +4,9 @@ import com.employee.elms.dto.LeaveRequestDTO;
 import com.employee.elms.dto.LeaveResponseDTO;
 import com.employee.elms.dto.LeaveStatusUpdateDTO;
 import com.employee.elms.entity.*;
+import com.employee.elms.exception.EmployeeNotFoundException;
 import com.employee.elms.exception.LeaveInvalidException;
 import com.employee.elms.mapper.LeaveMapper;
-import com.employee.elms.repository.EmployeeRepository;
 import com.employee.elms.repository.LeaveRepository;
 import com.employee.elms.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -18,19 +18,18 @@ import java.util.List;
 @Service
 public class LeaveService {
     private final LeaveRepository leaveRepository;
-    private final EmployeeRepository employeeRepository;
     private final LeaveMapper leaveMapper;
     private final UserRepository userRepository;
 
-    public LeaveService(LeaveRepository leaveRepository, LeaveMapper leaveMapper, EmployeeRepository employeeRepository, UserRepository userRepository){
+    public LeaveService(LeaveRepository leaveRepository, LeaveMapper leaveMapper, UserRepository userRepository){
         this.leaveRepository = leaveRepository;
-        this.employeeRepository = employeeRepository;
         this.leaveMapper = leaveMapper;
         this.userRepository = userRepository;
     }
 
     //Get all Leaves
     public List<LeaveResponseDTO> getAllLeave(){
+
         return leaveRepository
                 .findAll()
                 .stream()
@@ -42,7 +41,7 @@ public class LeaveService {
     public List<LeaveResponseDTO> getMyLeave(String username){
 
         AppUser user = userRepository.findByUserName(username)
-                .orElseThrow(() -> new LeaveInvalidException("User not found!"));
+                .orElseThrow(() -> new EmployeeNotFoundException("User not found!"));
 
         long employeeId = user.getEmployee().getId();
         return leaveRepository
@@ -54,10 +53,12 @@ public class LeaveService {
 
     //Submit a leave
     @Transactional
-    public LeaveResponseDTO addLeave(LeaveRequestDTO request){
+    public LeaveResponseDTO addLeave(LeaveRequestDTO request, String username){
 
-        Employee employee = employeeRepository.findById(request.getEmployeeId())
-                .orElseThrow(() -> new LeaveInvalidException("Employee not found"));
+        AppUser user = userRepository.findByUserName(username)
+                .orElseThrow(()-> new EmployeeNotFoundException("Employee not found!"));
+
+        Employee employee = user.getEmployee();
 
         if (request.getStartDate().isAfter(request.getEndDate())){
             throw new LeaveInvalidException("Start date cannot be after end date!");
@@ -65,6 +66,10 @@ public class LeaveService {
         if (request.getStartDate().isBefore(LocalDate.now())){
             throw new LeaveInvalidException("Start date must be present!");
         }
+        if (request.getEmployeeStatus().isInactive()){
+            throw new LeaveInvalidException("Employee not existed!");
+        }
+
         boolean hasOverlap = leaveRepository.existsByEmployeeAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
                 employee,
                 request.getStartDate(),
@@ -80,10 +85,8 @@ public class LeaveService {
         }
 
         LeaveRequest leaveRequest = leaveMapper.toEntity(request);
-
         leaveRequest.setEmployee(employee);
         leaveRequest.setStatus(LeaveStatus.PENDING);
-
         LeaveRequest submitLeave = leaveRepository.save(leaveRequest);
 
         return leaveMapper.toResponse(submitLeave);
@@ -112,10 +115,13 @@ public class LeaveService {
          return leaveMapper.toResponse(leaveRepository.save(leaveRequest));
     }
 
-    public void DeleteLeave(long id){
+    @Transactional
+    public void deleteLeave(long id){
        if (!leaveRepository.existsById(id)){
-           throw new LeaveInvalidException("Employee leave with id"+id+"does not exist!");
+           throw new LeaveInvalidException("Leave request with id"+id+"does not exist!");
        }
+
+       leaveRepository.deleteById(id);
     }
 
 }

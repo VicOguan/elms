@@ -1,9 +1,7 @@
 package com.employee.elms.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class Employee {
@@ -21,7 +19,9 @@ public class Employee {
     private String department;
     private String position;
     private LocalDate hiredDate;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private EmploymentStatus employeeStatus;
 
     public Employee(){}
 
@@ -31,15 +31,12 @@ public class Employee {
     public void setId(long id){
         this.id = id;
     }
-
     public String getEmployeeNumber() {
         return employeeNumber;
     }
-
     public void setEmployeeNumber(String employeeNumber) {
         this.employeeNumber = employeeNumber;
     }
-
     public String getFirstname(){
         return firstname;
     }
@@ -76,20 +73,16 @@ public class Employee {
     public void setPosition(String position){
         this.position = position;
     }
-
     public LocalDate getHiredDate() {
         return hiredDate;
     }
-
     public void setHiredDate(LocalDate hiredDate) {
         this.hiredDate = hiredDate;
     }
-
-    public String getStatus() {
-        return status;
+    public EmploymentStatus getEmployeeStatus() {
+        return employeeStatus;
     }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setEmployeeStatus(EmploymentStatus employeeStatus) {
+        this.employeeStatus = employeeStatus;
     }
 }

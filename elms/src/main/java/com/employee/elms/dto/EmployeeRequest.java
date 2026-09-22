@@ -1,12 +1,8 @@
 package com.employee.elms.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import com.employee.elms.entity.EmploymentStatus;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class EmployeeRequest {
     private String employeeNumber;
@@ -17,7 +13,7 @@ public class EmployeeRequest {
     private String department;
     private String position;
     private LocalDate hiredDate;
-    private String status;
+    private EmploymentStatus employeeStatus;
 
     public EmployeeRequest(){}
 
@@ -78,11 +74,11 @@ public class EmployeeRequest {
         this.hiredDate = hiredDate;
     }
 
-    public String getStatus() {
-        return status;
+    public EmploymentStatus getEmployeeStatus() {
+        return employeeStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setEmployeeStatus(EmploymentStatus employeeStatus) {
+        this.employeeStatus = employeeStatus;
     }
 }

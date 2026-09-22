@@ -6,6 +6,7 @@ import com.employee.elms.entity.Employee;
 import com.employee.elms.exception.EmployeeNotFoundException;
 import com.employee.elms.mapper.EmployeeMapper;
 import com.employee.elms.repository.EmployeeRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,18 +57,27 @@ public class EmployeeService {
     }
 
     //Update Employee
+    @Transactional
     public EmployeeResponse updateEmployee(long id, EmployeeRequest request){
         Employee employee = employeeRepository
                 .findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee with id "+id+"is not found!"));
 
         employee.setFirstname(request.getFirstname());
+        employee.setLastName(request.getLastName());
+        employee.setEmail(request.getEmail());
+        employee.setPhoneNumber(request.getPhoneNumber());
+        employee.setDepartment(request.getDepartment());
+        employee.setPosition(request.getPosition());
+        employee.setHiredDate(request.getHiredDate());
+        employee.setEmployeeStatus(request.getEmployeeStatus());
 
         Employee updateEmployee = employeeRepository.save(employee);
         return employeeMapper.toResponse(updateEmployee);
     }
 
     //Delete employee
+    @Transactional
     public void deleteEmployee(long id){
         if (!employeeRepository.existsById(id)){
             throw new EmployeeNotFoundException("Employee with id "+id+"is not found!");

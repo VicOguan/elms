@@ -1,5 +1,7 @@
 package com.employee.elms.dto;
 
+import com.employee.elms.entity.EmploymentStatus;
+
 import java.time.LocalDate;
 
 public class EmployeeResponse {
@@ -12,11 +14,11 @@ public class EmployeeResponse {
     private String department;
     private String position;
     private LocalDate hiredDate;
-    private String status;
+    private EmploymentStatus employeeStatus;
 
     public EmployeeResponse(long id, String employeeNumber, String firstname, String lastName,
                            String email, String phoneNumber, String department, String position,
-                           LocalDate hiredDate, String status){
+                           LocalDate hiredDate, EmploymentStatus employeeStatus){
         this.id = id;
         this.employeeNumber = employeeNumber;
         this.firstname = firstname;
@@ -26,7 +28,7 @@ public class EmployeeResponse {
         this.department = department;
         this.position = position;
         this.hiredDate = hiredDate;
-        this.status = status;
+        this.employeeStatus = employeeStatus;
     }
 
     public long getId() {
@@ -94,10 +96,10 @@ public class EmployeeResponse {
         this.hiredDate = hiredDate;
     }
 
-    public String getStatus() {
-        return status;
+    public EmploymentStatus getEmployeeStatus() {
+        return employeeStatus;
     }
-    public void setStatus(String status) {
-        this.status = status;
+    public void setEmployeeStatus(EmploymentStatus employeeStatus) {
+        this.employeeStatus = employeeStatus;
     }
 }

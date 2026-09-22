@@ -29,7 +29,7 @@ public class DataInitializer implements CommandLineRunner {
 
             Employee employee = employeeRepository
                     .findByEmployeeNumber("EMP001")
-                    .orElseThrow(() -> new EmployeeNotFoundException("Admin emp not found!"));
+                    .orElseThrow(() -> new EmployeeNotFoundException("Admin EMP not found!"));
 
             AppUser admin = new AppUser();
             admin.setUserName("admin");

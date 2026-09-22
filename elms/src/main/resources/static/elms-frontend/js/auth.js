@@ -1,43 +1,46 @@
-const API_URL="http://localhost:8080";
+const API_URL = "http://localhost:8080";
 
-async function login(){
+async function login() {
 
-    const username=document.getElementById("username").value;
+    console.log("Login clicked");
 
-    const password=document.getElementById("password").value;
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
 
-    const response=await fetch(API_URL+"/auth/login",{
+    try {
 
-        method:"POST",
+        const response = await fetch(API_URL + "/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        });
 
-        headers:{
-            "Content-Type":"application/json"
-        },
+        console.log("Status:", response.status);
 
-        body:JSON.stringify({
+        if (!response.ok) {
+            document.getElementById("message").innerText = "Invalid credentials.";
+            return;
+        }
 
-            username,
-            password
+        const data = await response.json();
+        console.log("Token received:", data);
 
-        })
-    });
+        localStorage.setItem("token", data.token);
 
-    if(!response.ok){
+        const payload = JSON.parse(atob(data.token.split(".")[1]));
 
-        document.getElementById("message").innerText="Invalid credentials";
+        localStorage.setItem("username", payload.sub);
+        localStorage.setItem("role", payload.role || payload.roles || "");
 
-        return;
+        window.location.href = "dashboard.html";
+
+    } catch (err) {
+        console.error(err);
+        document.getElementById("message").innerText = "Cannot connect to server.";
     }
-
-    const data=await response.json();
-
-    localStorage.setItem("token",data.token);
-
-    //Decode JWT payload
-
-    const payload=JSON.parse(atob(data.token.split(".")[1]));
-
-    localStorage.setItem("role",payload.role||payload.roles);
-
-    window.location="dashboard.html";
 }
