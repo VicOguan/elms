@@ -6,8 +6,8 @@
   <ul align="center">
     <summary>
       <h1 style="display: inline-block">
-         <a href="https://git.io/typing-svg">
-           <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&width=435&lines=EMPLOYEE+LEAVE+MANAGEMENT+SYSTEM" alt="Typing SVG" /></a>
+        <a href="https://git.io/typing-svg">
+          <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&width=435&lines=EMPLOYEE+LEAVE+MANAGEMENT+SYSTEM" alt="Typing SVG" />
         </a>
       </h1>
     </summary>
@@ -30,19 +30,19 @@
 <!--Features List-->
 <ul>
   <li>
-    <p>👤 <strong>Employee Self-Service Portal:</strong> Request time-off, track leave balances (Sick, Casual, Annual), and view historical approval status in real-time.</p>
+    <p>👤 <strong>Employee Portal:</strong> Submit leave requests with custom categories (<code>VACATION</code>, <code>SICK</code>, <code>EMERGENCY</code>, <code>MATERNITY</code>, <code>PATERNITY</code>) and view personal leave history with real-time status updates (<code>PENDING</code>, <code>APPROVED</code>, <code>REJECTED</code>).</p>
   </li>
   <li>
-    <p>🛡️ <strong>Manager & Admin Dashboard:</strong> Effortlessly review, approve, or reject requests with audit commentary and manage team-wide calendar availability.</p>
+    <p>🛡️ <strong>Manager & Admin Dashboard:</strong> Review all submitted employee leave requests, approve or reject applications, and view company-wide leave metrics.</p>
   </li>
   <li>
-    <p>📩 <strong>Automated Notifications:</strong> Instant email updates for employees and actionable alerts for managers upon request submissions.</p>
+    <p>👥 <strong>Employee Management:</strong> Add, edit, or delete employee records, auto-generate employee numbers, and manage active employment statuses (<code>ACTIVE</code>, <code>ON_LEAVE</code>, <code>RESIGNED</code>, <code>TERMINATED</code>).</p>
   </li>
   <li>
-    <p>🔐 <strong>Role-Based Access Control:</strong> Secure token-based authentication (JWT / OAuth 2.0) with granular user roles.</p>
+    <p>🔐 <strong>User & Account Management:</strong> Register role-based accounts (<code>EMPLOYEE</code>, <code>MANAGER</code>, <code>ADMIN</code>) linked directly to employee records, and manage account statuses via dedicated admin controls.</p>
   </li>
   <li>
-    <p>📊 <strong>Quota & Policy Management:</strong> Dynamic annual accrual tracking, custom leave categories, and enterprise compliance reporting.</p>
+    <p>🔑 <strong>JWT Authentication & Security:</strong> Secure stateless token authentication with Spring Security and granular endpoint access control based on user roles.</p>
   </li>
 </ul>
 
@@ -62,7 +62,7 @@
 <!--Tech Stack Icons-->
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=java,mysql,git,github,postman&perline=8">
+    <img src="https://skillicons.dev/icons?i=java,spring,mysql,html,css,js,git,github,postman&perline=9">
   </a>
 </p>
 
@@ -91,33 +91,87 @@
   <tbody>
     <tr>
       <td><code>POST</code></td>
-      <td><code>/api/auth/login</code></td>
-      <td>User authentication & token generation</td>
+      <td><code>/auth/login</code></td>
+      <td>Authenticate user & return JWT token</td>
       <td>Public</td>
     </tr>
     <tr>
+      <td><code>POST</code></td>
+      <td><code>/auth/register</code></td>
+      <td>Register an Employee user account</td>
+      <td>Admin</td>
+    </tr>
+    <tr>
+      <td><code>POST</code></td>
+      <td><code>/auth/register/manager</code></td>
+      <td>Register a Manager user account</td>
+      <td>Admin</td>
+    </tr>
+    <tr>
+      <td><code>POST</code></td>
+      <td><code>/auth/register/admin</code></td>
+      <td>Register an Admin user account</td>
+      <td>Admin</td>
+    </tr>
+    <tr>
       <td><code>GET</code></td>
-      <td><code>/api/leaves</code></td>
-      <td>Fetch current user leave requests</td>
+      <td><code>/leave/my</code></td>
+      <td>Fetch current employee's leave requests</td>
       <td>Employee</td>
     </tr>
     <tr>
       <td><code>POST</code></td>
-      <td><code>/api/leaves</code></td>
-      <td>Submit a new time-off application</td>
+      <td><code>/leave</code></td>
+      <td>Submit a new leave application</td>
       <td>Employee</td>
     </tr>
     <tr>
       <td><code>GET</code></td>
-      <td><code>/api/admin/leaves</code></td>
-      <td>Retrieve all pending team requests</td>
+      <td><code>/leave</code></td>
+      <td>Retrieve all employee leave requests</td>
       <td>Manager / Admin</td>
     </tr>
     <tr>
       <td><code>PUT</code></td>
-      <td><code>/api/admin/leaves/:id</code></td>
-      <td>Approve or reject leave request</td>
+      <td><code>/leave/{id}/status</code></td>
+      <td>Approve or reject a leave request</td>
       <td>Manager / Admin</td>
+    </tr>
+    <tr>
+      <td><code>DELETE</code></td>
+      <td><code>/leave/{id}</code></td>
+      <td>Delete a leave request</td>
+      <td>Manager / Admin</td>
+    </tr>
+    <tr>
+      <td><code>GET</code></td>
+      <td><code>/employee</code></td>
+      <td>Fetch all employee profiles</td>
+      <td>Manager / Admin</td>
+    </tr>
+    <tr>
+      <td><code>POST</code></td>
+      <td><code>/employee</code></td>
+      <td>Add a new employee record</td>
+      <td>Admin</td>
+    </tr>
+    <tr>
+      <td><code>PUT</code></td>
+      <td><code>/employee/{id}</code></td>
+      <td>Update employee details & status</td>
+      <td>Admin</td>
+    </tr>
+    <tr>
+      <td><code>DELETE</code></td>
+      <td><code>/employee/{id}</code></td>
+      <td>Delete an employee record</td>
+      <td>Admin</td>
+    </tr>
+    <tr>
+      <td><code>GET</code></td>
+      <td><code>/users</code></td>
+      <td>Retrieve user accounts list & linked status</td>
+      <td>Admin</td>
     </tr>
   </tbody>
 </table>
@@ -127,9 +181,7 @@
   <ul align="center">
     <summary>
       <h2 style="display: inline-block">
-        <a href="https://readme-typing-svg.demolab.com">
-          <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=C678DD&center=true&vcenter=true&width=450&lines=Connect+With+Maintainers+%F0%A4%93" alt="Connect With Maintainers" />
-        </a>
+        <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=30&pause=1000&width=435&lines=Connect+with+me" alt="Typing SVG" /></a>
       </h2>
     </summary>
   </ul>
@@ -137,7 +189,7 @@
 
 <p align="center">
   <a href="https://github.com" target="_blank"><img align="center" src="https://user-images.githubusercontent.com/88904952/234982627-019fd336-6248-453c-9b05-97c13fd1d207.png" alt="github" height="50" width="50"></a>
-  <a href="linkedin.com/in/ludivico-oguan-62725b27a" target="_blank"><img align="center" src="https://user-images.githubusercontent.com/88904952/234979284-68c11d7f-1acc-4f0c-ac78-044e1037d7b0.png" alt="linkedin" height="50" width="50"></a>
+  <a href="https://linkedin.com/in/ludivico-oguan-62725b27a" target="_blank"><img align="center" src="https://user-images.githubusercontent.com/88904952/234979284-68c11d7f-1acc-4f0c-ac78-044e1037d7b0.png" alt="linkedin" height="50" width="50"></a>
 </p>
 
 <!--horizontal divider(gradiant)-->
