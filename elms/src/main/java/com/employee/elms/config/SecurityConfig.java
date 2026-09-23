@@ -37,10 +37,16 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 HttpMethod.POST,
-                                "/auth/register",
-                                "/auth/login",
-                                "/auth/register/manager"
+                                "/auth/login"
                         ).permitAll()
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/auth/register",
+                                "/auth/register/manager",
+                                "/auth/register/admin"
+                        ).hasRole("ADMIN")
+
 
                         .requestMatchers(
                                 HttpMethod.POST,

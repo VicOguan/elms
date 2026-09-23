@@ -38,8 +38,6 @@ public class DataInitializer implements CommandLineRunner {
             admin.setEmployee(employee);
 
             userRepository.save(admin);
-
-            System.out.println("initial admin account register");
         }
     }
 }

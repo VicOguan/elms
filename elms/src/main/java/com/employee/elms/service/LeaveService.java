@@ -66,8 +66,9 @@ public class LeaveService {
         if (request.getStartDate().isBefore(LocalDate.now())){
             throw new LeaveInvalidException("Start date must be present!");
         }
-        if (request.getEmployeeStatus().isInactive()){
-            throw new LeaveInvalidException("Employee not existed!");
+        // Check the actual employee record from the database, not the request DTO
+        if (employee.getEmployeeStatus() != null && employee.getEmployeeStatus().isInactive()){
+            throw new LeaveInvalidException("Employee is inactive and cannot request leave!");
         }
 
         boolean hasOverlap = leaveRepository.existsByEmployeeAndStartDateLessThanEqualAndEndDateGreaterThanEqual(

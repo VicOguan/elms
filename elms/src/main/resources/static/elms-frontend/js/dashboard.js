@@ -16,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
         roleBadge.innerText = role || "EMPLOYEE";
     }
 
+    if (role === "ADMIN") {
+        addEmployeeBtn.style.display = "block";
+        manageAccountsBtn.style.display = "block"; // <-- Add this line
+    }
+
     if (role === "MANAGER" || role === "ADMIN") {
 
         dashboardBtn.style.display = "block";
