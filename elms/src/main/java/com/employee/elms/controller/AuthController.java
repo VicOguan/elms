@@ -47,6 +47,14 @@ public class AuthController {
                 .body("Successfully registered");
     }
 
+    @PostMapping("/register/admin")
+    public ResponseEntity<String> registerAdmin(@Valid @RequestBody RegisterRequest request){
+        authService.registerAdmin(request);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body("Successfully registered");
+    }
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(
             @Valid @RequestBody LoginRequest request){

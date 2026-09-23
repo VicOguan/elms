@@ -4,6 +4,7 @@ import com.employee.elms.dto.RegisterRequest;
 import com.employee.elms.entity.AppUser;
 import com.employee.elms.entity.Employee;
 import com.employee.elms.exception.EmployeeNotFoundException;
+import com.employee.elms.exception.LeaveInvalidException;
 import com.employee.elms.repository.EmployeeRepository;
 import com.employee.elms.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,6 +34,20 @@ public class AuthService {
         appUser.setUserName(request.getUsername());
         appUser.setPassword(passwordEncoder.encode(request.getPassword()));
         appUser.setRole("EMPLOYEE");
+        appUser.setEmployee(employee);
+
+        userRepository.save(appUser);
+    }
+
+    public void registerAdmin(RegisterRequest request){
+        Employee employee = employeeRepository
+                .findByEmployeeNumber(request.getEmployeeNumber())
+                .orElseThrow(()-> new LeaveInvalidException("Employee not found"));
+
+        AppUser appUser = new AppUser();
+        appUser.setUserName(request.getUsername());
+        appUser.setPassword(passwordEncoder.encode(request.getPassword()));
+        appUser.setRole("ADMIN");
         appUser.setEmployee(employee);
 
         userRepository.save(appUser);
