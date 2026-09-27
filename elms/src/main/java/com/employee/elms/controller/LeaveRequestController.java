@@ -48,8 +48,6 @@ public class LeaveRequestController {
     @GetMapping("/leave/my")
     public ResponseEntity<List<LeaveResponseDTO>> getMyLeave(
             Authentication authentication){
-        System.out.println(authentication);
-        System.out.println(authentication.getAuthorities());
 
     return ResponseEntity.ok(leaveService.getMyLeave(authentication.getName()));
     }
